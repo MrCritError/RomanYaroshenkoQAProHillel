@@ -1,0 +1,45 @@
+var services = {
+"Капуино": "50 грн",
+"Латте": "55 грн",
+"Американо": "25 грн"
+};
+services ['Кава'] = "50";
+function parsePrice(price) {
+  return parseFloat(price.replace(' грн', ''));
+}
+services.price = function() {
+  var total = 0;
+  for (var key in this) {
+    if (this.hasOwnProperty(key) && typeof this[key] === 'string') {
+      total += parsePrice(this[key]);
+    }
+  }
+  return total + ' грн';
+};
+services.minPrice = function() {
+  var min = Infinity;
+  for (var key in this) {
+    if (this.hasOwnProperty(key) && typeof this[key] === 'string') {
+      var price = parsePrice(this[key]);
+      if (price < min) {
+        min = price;
+      }
+    }
+  }
+  return min + ' грн';
+};
+services.maxPrice = function() {
+  var max = -Infinity;
+  for (var key in this) {
+    if (this.hasOwnProperty(key) && typeof this[key] === 'string') {
+      var price = parsePrice(this[key]);
+      if (price > max) {
+        max = price;
+      }
+    }
+  }
+  return max + ' грн';
+};
+console.log("Загальна вартість:", services.price()); 
+console.log("Мінімальна вартість:", services.minPrice());
+console.log("Максимальна вартість:", services.maxPrice(
